@@ -117,14 +117,17 @@ public:
         Stack stack;
 
         Vertex *vertex = searchVertex(startingVertex);
+        if(vertex == NULL)
+            return;
+
         stack.push(vertex);
 
-        // while (!stack.empty())
-        // {
-        //     int currentVertex = stack.getTop();
-        //     stack.pop();
+        while (!stack.empty())
+        {
+            Vertex *currentVertex = stack.getTop();
+            stack.pop();
 
-        // }
+        }
     }
 };
 
@@ -147,10 +150,11 @@ int main()
     obj.addEdge(4, 7);
     obj.addEdge(88, 39);
     obj.addEdge(88, 42);
+    obj.addEdge(39, 42);
     obj.addEdge(42, 7);
-    obj.addEdge(111, 999);
+    // obj.addEdge(111, 999);
 
-    obj.DFS(88);
+    obj.DFS(22);
 
     obj.print();
 }

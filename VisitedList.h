@@ -119,6 +119,7 @@ public:
         Vertex *currentVertexNode = vertexListHead;
         while (currentVertexNode != NULL)
         {
+            // basically addOnTail
             visitedList->addVertexData(currentVertexNode->getData(), false);
             currentVertexNode = currentVertexNode->getNext();
         }
