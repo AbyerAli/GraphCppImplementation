@@ -107,110 +107,104 @@ public:
         return NULL;
     }
 
-    void DFS(int startingVertex)
+    void DFS()
     {
         VisitedList visitedList;
         // initially set all vertices as false in visited list
-        visitedList.fillList(getHead(), &visitedList);
+        visitedList.fillList(getHead());
 
-        //use this, currentVertexTop from stack = top of stack here to perform operation on;
-        Vertex* currVertex = searchVertex(startingVertex);
-        Stack stack;
-
-        //first add the starting vertex on stack
-        stack.push(startingVertex);
-
-        while (!stack.empty())
+        Vertex *currentVertex = getHead();
+        while (currentVertex != NULL)
         {
-            //check if dead end node && marked true
-            if (currVertex->getEdgeList()->getHead() == NULL && visitedList.isVisited(currVertex->getData()))
+            
+            Stack stack;
+            stack.push(currentVertex->getData());
+            while (!stack.empty())
             {
+                int top = stack.getTop();
                 stack.pop();
-            }
-            EdgeNode* currEdgeNode = currVertex->getEdgeList()->getHead();
-            // traverse adj list using currentVertexTop & keep traversing until dead end
-            while (currEdgeNode != NULL)
-            {
-                cout << currVertex->getData() << endl;
 
-                // if the currentEdge is checked then hop on to the next vertex(edge)
-                if (visitedList.isVisited(currEdgeNode->getDestination()))
+                Vertex *v = searchVertex(top);
+                if(!visitedList.isVisited(v->getData()))
                 {
-                    currEdgeNode = currEdgeNode->getNext();
+                    cout << top << endl;
+                    visitedList.setVisited(top, true);
                 }
-                // the current edge is not visited then mark it as visited and move on to the next edge as appropriate
-                if (!visitedList.isVisited(currEdgeNode->getDestination()))
+                EdgeNode *edgeNode = v->getEdgeList()->getHead();
+                while (edgeNode != NULL)
                 {
-                    // change the currentVertex to the found one using searchVertex function.
-                    stack.push(currEdgeNode->getDestination());
-                    visitedList.setVisited(currEdgeNode->getDestination(), true);
-                    currVertex = searchVertex(currEdgeNode->getDestination());
-                    currEdgeNode = currVertex->getEdgeList()->getHead();
+                    if(!visitedList.isVisited(edgeNode->getDestination())) {
+                        stack.push(edgeNode->getDestination());
+                    } 
+                    edgeNode = edgeNode->getNext();
                 }
             }
+            
+            currentVertex = currentVertex->getNext();
         }
+        
     }
-
-    // void DFS(int startingVertex)
-    // {
-    //     VisitedList visitedList;
-    //     // initially set all vertices as false in visited list
-    //     visitedList.fillList(getHead(), &visitedList);
-
-    //     Stack stack;
-
-    //     - first add the starting vertex on stack
-
-    //     while (!stack.empty())
-    //     {
-
-    //         if(check if dead end node && marked true) {
-    //             stack.pop();
-    //         }
-
-    //         //use this
-    //         currentVertexTop from stack = top of stack here to perform operation on;
-
-    //         //keep traversing until dead end
-    //         while (traverse adj list using currentVertexTop )
-    //         {
-
-    //             if( the currentEdge is checked then hop on to the next vertex (edge) ){
-    //                 //do you shit here
-    //             }
-    //             if(the current edge is not visited then mark it as visited and move on to the next edge as appropriate) {
-    //                 //change the currentVertex to the found one using searchVertex function.
-    //             }
-    //         }
-
-    //     }
-    // }
 };
 
 int main()
 {
     // graph is directed!
     Graph obj;
+    // case - 1
+    // obj.addVertex(22);
+    // obj.addVertex(4);
+    // obj.addVertex(88);
+    // obj.addVertex(7);
+    // obj.addVertex(39);
+    // obj.addVertex(42);
+    // obj.addVertex(999);
+    // obj.addVertex(111);
 
-    obj.addVertex(22);
+    // obj.addEdge(22, 4);
+    // obj.addEdge(4, 88);
+    // obj.addEdge(4, 7);
+    // obj.addEdge(88, 39);
+    // obj.addEdge(88, 42);
+    // obj.addEdge(39, 42);
+    // obj.addEdge(42, 7);
+
+    // case - 2
+    // obj.addVertex(1);
+    // obj.addVertex(4);
+    // obj.addVertex(8);
+    // obj.addVertex(9);
+    // obj.addVertex(10);
+    // obj.addVertex(12);
+    // obj.addVertex(15);
+    // obj.addVertex(44);
+    // obj.addVertex(55);
+    // obj.addVertex(67);
+
+    // obj.addEdge(1, 8);
+    // obj.addEdge(8, 10);
+    // obj.addEdge(8, 9);
+    // obj.addEdge(10, 4);
+    // obj.addEdge(10, 12);
+    // obj.addEdge(9, 44);
+    // obj.addEdge(9, 55);
+    // obj.addEdge(12, 4);
+    // obj.addEdge(4, 15);
+    // obj.addEdge(12, 67);
+    // obj.addEdge(67, 44);
+    // obj.addEdge(44, 55);
+    obj.addVertex(1);
+    obj.addVertex(2);
+    obj.addVertex(3);
     obj.addVertex(4);
-    obj.addVertex(88);
-    obj.addVertex(7);
-    obj.addVertex(39);
-    obj.addVertex(42);
-    obj.addVertex(999);
-    obj.addVertex(111);
+    obj.addVertex(6);
 
-    obj.addEdge(22, 4);
-    obj.addEdge(4, 88);
-    obj.addEdge(4, 7);
-    obj.addEdge(88, 39);
-    obj.addEdge(88, 42);
-    obj.addEdge(39, 42);
-    obj.addEdge(42, 7);
-    // obj.addEdge(111, 999);
 
-    obj.DFS(22);
+    obj.addEdge(1, 6);
+    obj.addEdge(2, 6);
+    obj.addEdge(3, 6);
+    obj.addEdge(4, 6);
 
-    obj.print();
+    obj.DFS();
+
+    // obj.print();
 }

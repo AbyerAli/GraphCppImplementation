@@ -45,6 +45,10 @@ class Stack
     StackNode *tail;
 
 public:
+    Stack() {
+        setHead(NULL);
+        setTail(NULL);
+    }
     void setHead(StackNode *Head)
     {
         this->head = Head;

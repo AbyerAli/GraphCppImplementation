@@ -17,6 +17,7 @@ public:
     {
         next = NULL;
         this->visited = visited;
+        this->vertex = vertex;
     }
     bool getVisited()
     {
@@ -99,6 +100,7 @@ public:
             }
             currentNode = currentNode->getNext();
         }
+        return false;
     }
     void addVertexData(int vertex, bool isVisited)
     {
@@ -114,13 +116,13 @@ public:
             setTail(newNode);
         }
     }
-    void fillList(Vertex *vertexListHead, VisitedList *visitedList)
+    void fillList(Vertex *vertexListHead)
     {
         Vertex *currentVertexNode = vertexListHead;
         while (currentVertexNode != NULL)
         {
             // basically addOnTail
-            visitedList->addVertexData(currentVertexNode->getData(), false);
+            addVertexData(currentVertexNode->getData(), false);
             currentVertexNode = currentVertexNode->getNext();
         }
     }
