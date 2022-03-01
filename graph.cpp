@@ -2,6 +2,108 @@
 using namespace std;
 
 
+//  Stack
+//----------------------------------------------------------
+class StackNode
+{
+    int data;
+    StackNode *next;
+public:
+    StackNode(){
+        this->next = NULL;
+        data = 0;
+    }
+    StackNode(int data)
+    {
+        this->data = data;
+        next = NULL;
+    }
+    int getData()
+    {
+        return data;
+    }
+    void setData(int data)
+    {
+        this->data = data;
+    }
+    void setNext(StackNode *next)
+    {
+        this->next = next;
+    }
+    StackNode *getNext()
+    {
+        return next;
+    }
+};
+
+class Stack
+{
+    StackNode *head;
+    StackNode *tail;
+public:
+    void setHead(StackNode *Head)
+    {
+        this->head = Head;
+    }
+    bool empty()
+    {
+        return head == NULL;
+    }
+    void setTail(StackNode *Tail)
+    {
+        this->tail = Tail;
+    }
+    StackNode *getHead()
+    {
+        return this->head;
+    }
+    StackNode *getTail()
+    {
+        return tail;
+    }
+
+    int getTop()
+    {
+        return getHead()->getData();
+    }
+
+    //addOnHead
+    void push(int data)
+    {
+        StackNode *newNode = new StackNode(data);
+        if(empty()){
+            setHead(newNode);
+            setTail(newNode);
+        } else {
+            newNode->setNext(getHead());
+            setHead(newNode);
+        }
+    }
+
+    //removeFromHead
+    void pop()
+    {
+        if(empty()){
+            cout << "nothing to pop" << endl;
+        } else {
+            if(getHead()->getNext() == NULL) {
+                delete getHead();
+                setHead(NULL);
+                setTail(NULL);
+            } else {
+                StackNode *rmNode = getHead();
+                setHead(rmNode->getNext());
+                delete rmNode;
+                rmNode = NULL;
+            }
+        }
+    }
+};
+//----------------------------------------------------------
+
+
+
+//----------------------------------------
 class EdgeNode {
     int destination;
     EdgeNode* next;
@@ -221,6 +323,16 @@ public:
             setTail(newNode);
         }
     }
+    void fillList(Vertex *vertexListHead, VisitedList *visitedList)
+    {
+        Vertex *currentVertexNode = vertexListHead;
+        while (currentVertexNode != NULL)
+        {
+            visitedList->addVertexData(currentVertexNode->getData(), false);
+            currentVertexNode = currentVertexNode->getNext();
+        }
+        
+    }
 };
 
 //----------------------------------------------------------
@@ -260,7 +372,6 @@ public:
 class Graph {
     Vertex* head;
     Vertex* tail;
-    VisitedList visitedList;
 public:
     Graph() {
         setHead(NULL);
@@ -334,6 +445,24 @@ public:
         }
         
     }
+
+    void DFS(int startingVertex)
+    {
+        VisitedList visitedList;
+        
+        // initially set all vertices as false in visited list
+        visitedList.fillList(getHead(), &visitedList);
+        
+        Stack stack;
+        stack.push(startingVertex);
+
+        while (!stack.empty())
+        {
+            //do the shit.
+        }
+        
+
+    }
 };
 
 
@@ -361,7 +490,7 @@ int main() {
     obj.addEdge(42, 7);
     obj.addEdge(111, 999);
 
-
+    obj.DFS(88);
 
 
 
