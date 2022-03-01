@@ -110,25 +110,81 @@ public:
     void DFS(int startingVertex)
     {
         VisitedList visitedList;
-
         // initially set all vertices as false in visited list
         visitedList.fillList(getHead(), &visitedList);
 
+        //use this, currentVertexTop from stack = top of stack here to perform operation on;
+        Vertex* currVertex = searchVertex(startingVertex);
         Stack stack;
 
-        Vertex *vertex = searchVertex(startingVertex);
-        if(vertex == NULL)
-            return;
-
-        stack.push(vertex);
+        //first add the starting vertex on stack
+        stack.push(startingVertex);
 
         while (!stack.empty())
         {
-            Vertex *currentVertex = stack.getTop();
-            stack.pop();
+            //check if dead end node && marked true
+            if (currVertex->getEdgeList()->getHead() == NULL && visitedList.isVisited(currVertex->getData()))
+            {
+                stack.pop();
+            }
+            EdgeNode* currEdgeNode = currVertex->getEdgeList()->getHead();
+            // traverse adj list using currentVertexTop & keep traversing until dead end
+            while (currEdgeNode != NULL)
+            {
+                cout << currVertex->getData() << endl;
 
+                // if the currentEdge is checked then hop on to the next vertex(edge)
+                if (visitedList.isVisited(currEdgeNode->getDestination()))
+                {
+                    currEdgeNode = currEdgeNode->getNext();
+                }
+                // the current edge is not visited then mark it as visited and move on to the next edge as appropriate
+                if (!visitedList.isVisited(currEdgeNode->getDestination()))
+                {
+                    // change the currentVertex to the found one using searchVertex function.
+                    stack.push(currEdgeNode->getDestination());
+                    visitedList.setVisited(currEdgeNode->getDestination(), true);
+                    currVertex = searchVertex(currEdgeNode->getDestination());
+                    currEdgeNode = currVertex->getEdgeList()->getHead();
+                }
+            }
         }
     }
+
+    // void DFS(int startingVertex)
+    // {
+    //     VisitedList visitedList;
+    //     // initially set all vertices as false in visited list
+    //     visitedList.fillList(getHead(), &visitedList);
+
+    //     Stack stack;
+
+    //     - first add the starting vertex on stack
+
+    //     while (!stack.empty())
+    //     {
+
+    //         if(check if dead end node && marked true) {
+    //             stack.pop();
+    //         }
+
+    //         //use this
+    //         currentVertexTop from stack = top of stack here to perform operation on;
+
+    //         //keep traversing until dead end
+    //         while (traverse adj list using currentVertexTop )
+    //         {
+
+    //             if( the currentEdge is checked then hop on to the next vertex (edge) ){
+    //                 //do you shit here
+    //             }
+    //             if(the current edge is not visited then mark it as visited and move on to the next edge as appropriate) {
+    //                 //change the currentVertex to the found one using searchVertex function.
+    //             }
+    //         }
+
+    //     }
+    // }
 };
 
 int main()

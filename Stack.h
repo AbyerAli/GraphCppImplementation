@@ -8,25 +8,24 @@ using namespace std;
 //  Stack
 class StackNode
 {
-    Vertex *vertex;
+    int vertex;
     StackNode *next;
 
 public:
     StackNode()
     {
         this->next = NULL;
-        vertex = NULL;
     }
-    StackNode(Vertex *vertex)
+    StackNode(int vertex)
     {
         this->vertex = vertex;
         next = NULL;
     }
-    Vertex *getData()
+    int getData()
     {
         return vertex;
     }
-    void setData(Vertex *vertex)
+    void setData(int vertex)
     {
         this->vertex = vertex;
     }
@@ -68,13 +67,13 @@ public:
     }
 
     // return vertex in head
-    Vertex *getTop()
+    int getTop()
     {
         return getHead()->getData();
     }
 
     // addOnHead
-    void push(Vertex *vertex)
+    void push(int vertex)
     {
         StackNode *newNode = new StackNode(vertex);
         if (empty())
