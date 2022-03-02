@@ -114,22 +114,31 @@ public:
         visitedList.fillList(getHead());
 
         Vertex *currentVertex = getHead();
+
+        // visit every Vertex from vertexList and perform DFS on each vertex;
+        // Graph maybe disconnected so DFS on every vertex
         while (currentVertex != NULL)
         {
-            
+            //instantiate stack for current Vertex and push it on the stack 
             Stack stack;
             stack.push(currentVertex->getData());
+            
+            // traverse all the vertices associated with the currentVertex
+            // pop the top of stack before that save the top "v"
             while (!stack.empty())
             {
                 int top = stack.getTop();
                 stack.pop();
 
                 Vertex *v = searchVertex(top);
+                //if the poped vertex is not visited then add it to the visited list.
                 if(!visitedList.isVisited(v->getData()))
                 {
                     cout << top << endl;
                     visitedList.setVisited(top, true);
                 }
+                
+                // now traverse each vertix associated with the current Vertex and push them to the stack if not present in the visited list
                 EdgeNode *edgeNode = v->getEdgeList()->getHead();
                 while (edgeNode != NULL)
                 {
@@ -150,59 +159,35 @@ int main()
 {
     // graph is directed!
     Graph obj;
-    // case - 1
-    // obj.addVertex(22);
-    // obj.addVertex(4);
-    // obj.addVertex(88);
-    // obj.addVertex(7);
-    // obj.addVertex(39);
-    // obj.addVertex(42);
-    // obj.addVertex(999);
-    // obj.addVertex(111);
-
-    // obj.addEdge(22, 4);
-    // obj.addEdge(4, 88);
-    // obj.addEdge(4, 7);
-    // obj.addEdge(88, 39);
-    // obj.addEdge(88, 42);
-    // obj.addEdge(39, 42);
-    // obj.addEdge(42, 7);
-
-    // case - 2
-    // obj.addVertex(1);
-    // obj.addVertex(4);
-    // obj.addVertex(8);
-    // obj.addVertex(9);
-    // obj.addVertex(10);
-    // obj.addVertex(12);
-    // obj.addVertex(15);
-    // obj.addVertex(44);
-    // obj.addVertex(55);
-    // obj.addVertex(67);
-
-    // obj.addEdge(1, 8);
-    // obj.addEdge(8, 10);
-    // obj.addEdge(8, 9);
-    // obj.addEdge(10, 4);
-    // obj.addEdge(10, 12);
-    // obj.addEdge(9, 44);
-    // obj.addEdge(9, 55);
-    // obj.addEdge(12, 4);
-    // obj.addEdge(4, 15);
-    // obj.addEdge(12, 67);
-    // obj.addEdge(67, 44);
-    // obj.addEdge(44, 55);
-    obj.addVertex(1);
+ 
     obj.addVertex(2);
-    obj.addVertex(3);
-    obj.addVertex(4);
-    obj.addVertex(6);
+    obj.addVertex(34);
+    obj.addVertex(29);
+    obj.addVertex(1);
+    obj.addVertex(39);
+    obj.addVertex(50);
 
 
-    obj.addEdge(1, 6);
-    obj.addEdge(2, 6);
-    obj.addEdge(3, 6);
-    obj.addEdge(4, 6);
+
+    obj.addEdge(2, 34);
+    obj.addEdge(34, 2);
+
+    obj.addEdge(34, 29);
+    obj.addEdge(29, 34);
+
+    obj.addEdge(34, 1);
+    obj.addEdge(1, 34);
+
+    obj.addEdge(29, 50);
+    obj.addEdge(50, 29);
+
+    obj.addEdge(1, 39);
+    obj.addEdge(39, 1);
+
+    obj.addEdge(39, 50);
+    obj.addEdge(50, 39);
+
+
 
     obj.DFS();
 
